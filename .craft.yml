@@ -1,0 +1,9 @@
+minVersion: 0.23.1
+changelogPolicy: simple
+preReleaseCommand: bash scripts/craft-pre-release.sh
+targets:
+  - name: npm
+  - name: registry
+    sdks:
+      npm:@sentry-internal/profiling-node-binaries:
+  - name: github
