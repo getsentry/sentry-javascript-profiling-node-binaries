@@ -1,7 +1,10 @@
-## This is an old changelog.
+## 2.0.0
 
-The profiling-node package has since been migrated to sentry-javascript monorepo. Any changes to this package made after
-the migration are now tracked in the root CHANGELOG.md.
+The profiling-node binaries were moved out of the JavaScript monorepo and into to their own repository.
+
+## Repository Change.
+
+The profiling-node package was migrated to sentry-javascript monorepo. 
 
 ## 1.3.3
 
