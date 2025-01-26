@@ -1,10 +1,10 @@
 ## 2.0.0
 
-The profiling-node binaries were moved out of the JavaScript monorepo and into to their own repository.
+The profiling-node binaries were moved out of the JavaScript monorepo and into their own repository.
 
 ## Repository Change.
 
-The profiling-node package was migrated to sentry-javascript monorepo. 
+The profiling-node package was migrated to sentry-javascript monorepo.
 
 ## 1.3.3
 
