@@ -3,7 +3,7 @@
 // they should not be used outside of this file.
 
 // eslint-disable-next-line import/no-unresolved
-import { PrivateCpuProfilerBindings } from '@sentry-internal/profiling-node-binaries';
+import { PrivateCpuProfilerBindings } from '@sentry-internal/node-cpu-profiler';
 import { platform } from 'os';
 import { describe, expect,test } from 'vitest';
 

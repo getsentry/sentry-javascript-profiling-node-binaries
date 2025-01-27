@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
-import type { RawChunkCpuProfile, RawThreadCpuProfile } from '@sentry-internal/profiling-node-binaries';
+import type { RawChunkCpuProfile, RawThreadCpuProfile } from '@sentry-internal/node-cpu-profiler';
 // eslint-disable-next-line import/no-unresolved
-import { CpuProfilerBindings, PrivateCpuProfilerBindings,ProfileFormat } from '@sentry-internal/profiling-node-binaries';
+import { CpuProfilerBindings, PrivateCpuProfilerBindings,ProfileFormat } from '@sentry-internal/node-cpu-profiler';
 import { describe, expect,test } from 'vitest';
 
 function fail(message: string): never {

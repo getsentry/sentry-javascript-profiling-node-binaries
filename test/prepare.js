@@ -31,10 +31,10 @@ rmSync(tmpDir, { recursive: true, force: true });
 
 console.log('Writing package.json...');
 writeFileSync(join(__dirname, 'package.json'), `{
-      "name": "profiling-node-binaries-test",
+      "name": "node-cpu-profiler-test",
       "license": "MIT",
       "dependencies": {
-        "@sentry-internal/profiling-node-binaries": "file:../${normalizedName}-${pkgJson.version}.tgz"
+        "@sentry-internal/node-cpu-profiler": "file:../${normalizedName}-${pkgJson.version}.tgz"
       }
     }`);
 

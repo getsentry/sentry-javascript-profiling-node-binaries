@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Sentry Profiling Node Binaries
+# Sentry JavaScript Node CPU Profiler
 
-This is an internal package that contains the binaries used by
-`@sentry/profiling-node`.
+This is an internal package that contains the CPU profiler and native binaries
+used by `@sentry/profiling-node`.

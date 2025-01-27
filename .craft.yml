@@ -5,5 +5,5 @@ targets:
   - name: npm
   - name: registry
     sdks:
-      npm:@sentry-internal/profiling-node-binaries:
+      npm:@sentry-internal/node-cpu-profiler:
   - name: github
