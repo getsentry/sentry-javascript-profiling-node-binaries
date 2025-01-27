@@ -40,8 +40,7 @@
     "build:bindings:arm64": "node-gyp build --arch=arm64 && node scripts/copy-target.js",
     "build:dev": "yarn clean && yarn build:bindings:configure && yarn build",
     "build:tarball": "npm pack",
-    "pretest": "node ./test/prepare.js",
-    "test": "vitest run --testTimeout 60000"
+    "test": "node ./test/prepare.js && vitest run --testTimeout 60000"
   },
   "dependencies": {
     "detect-libc": "^2.0.2",

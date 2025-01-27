@@ -1,8 +1,20 @@
+/**
+ * We install the tarball in this directory to test the package.
+ */
 const { execSync, spawnSync } = require('node:child_process');
-const { rmSync, writeFileSync } = require('node:fs');
+const { rmSync, writeFileSync, existsSync } = require('node:fs');
 const { join } = require('node:path');
 
-const pkgJson = require('../package.json')
+const pkgJson = require('../package.json');
+const normalizedName = pkgJson.name.replace('@', '').replace('/', '-');
+
+const tarball = join(__dirname, '..', `${normalizedName}-${pkgJson.version}.tgz`);
+
+if (!existsSync(tarball)) {
+  console.error(`Tarball not found: '${tarball}'`);
+  console.error(`Run 'yarn build && yarn build:tarball' first`);
+  process.exit(1);
+}
 
 console.log('Clearing node_modules...');
 rmSync(join(__dirname, 'node_modules'), { recursive: true, force: true });
@@ -22,7 +34,7 @@ writeFileSync(join(__dirname, 'package.json'), `{
       "name": "profiling-node-binaries-test",
       "license": "MIT",
       "dependencies": {
-        "@sentry-internal/profiling-node-binaries": "file:../sentry-internal-profiling-node-binaries-${pkgJson.version}.tgz"
+        "@sentry-internal/profiling-node-binaries": "file:../${normalizedName}-${pkgJson.version}.tgz"
       }
     }`);
 
