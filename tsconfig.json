@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "module": "CommonJS",
+    "lib": ["es2018"],
+    "outDir": "lib",
+    "types": ["node"]
+  },
+  "include": ["src/**/*"]
+}
