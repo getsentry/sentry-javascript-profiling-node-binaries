@@ -1,6 +1,8 @@
 // Contains unit tests for some of the C++ bindings. These functions
 // are exported on the private bindings object, so we can test them and
 // they should not be used outside of this file.
+
+// eslint-disable-next-line import/no-unresolved
 import { PrivateCpuProfilerBindings } from '@sentry-internal/profiling-node-binaries';
 import { platform } from 'os';
 import { describe, expect,test } from 'vitest';
