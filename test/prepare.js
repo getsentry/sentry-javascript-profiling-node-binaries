@@ -34,10 +34,7 @@ writeFileSync(join(__dirname, 'package.json'), `{
       "name": "node-cpu-profiler-test",
       "license": "MIT",
       "dependencies": {
-        "@sentry-internal/node-cpu-profiler": "file:../${normalizedName}-${pkgJson.version}.tgz",
-        "webpack": "^5.97.1",
-        "node-loader": "^2.1.0",
-        "esbuild": "^0.24.2"
+        "@sentry-internal/node-cpu-profiler": "file:../${normalizedName}-${pkgJson.version}.tgz"
       }
     }`);
 
