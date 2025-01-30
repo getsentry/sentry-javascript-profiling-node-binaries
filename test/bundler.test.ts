@@ -35,7 +35,7 @@ describe('Bundler tests', () => {
       }).run((err, stats) => {
         try {
           expect(err).toBeNull();
-          expect(stats?.compilation.errors).toBe([]);
+          expect(stats?.compilation.errors.length).toBe(0);
           resolve();
         } catch (e) {
           console.error(stats?.compilation.errors);
