@@ -43,8 +43,8 @@
     "test": "node ./test/prepare.js && vitest run --testTimeout 60000"
   },
   "dependencies": {
-    "detect-libc": "^2.0.2",
-    "node-abi": "^3.61.0"
+    "detect-libc": "^2.0.3",
+    "node-abi": "^3.73.0"
   },
   "devDependencies": {
     "@sentry-internal/eslint-config-sdk": "^8.51.0",
@@ -55,7 +55,10 @@
     "eslint": "^7.0.0",
     "node-gyp": "^9.4.1",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.4",
+    "webpack": "^5.97.1",
+    "node-loader": "^2.1.0",
+    "esbuild": "^0.24.2"
   },
   "sideEffects": false,
   "volta": {
