@@ -33,6 +33,10 @@ console.log('Writing package.json...');
 writeFileSync(join(__dirname, 'package.json'), `{
       "name": "node-cpu-profiler-test",
       "license": "MIT",
+      "main": "bundle.mjs",
+      "scripts": {
+        "rebuild": "electron-rebuild"
+      },
       "dependencies": {
         "@sentry-internal/node-cpu-profiler": "file:../${normalizedName}-${pkgJson.version}.tgz"
       }

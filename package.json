@@ -58,7 +58,9 @@
     "vitest": "^3.0.4",
     "webpack": "^5.97.1",
     "node-loader": "^2.1.0",
-    "esbuild": "^0.24.2"
+    "esbuild": "^0.24.2",
+    "electron": "^34.1.0",
+    "@electron/rebuild": "^3.7.1"
   },
   "sideEffects": false,
   "volta": {
