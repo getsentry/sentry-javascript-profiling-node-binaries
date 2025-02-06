@@ -40,7 +40,10 @@
     "build:bindings:arm64": "node-gyp build --arch=arm64 && node scripts/copy-target.js",
     "build:dev": "yarn clean && yarn build:bindings:configure && yarn build",
     "build:tarball": "npm pack",
-    "test": "node ./test/prepare.js && vitest run --testTimeout 60000"
+    "test": "yarn test:bindings && yarn test:bundling && yarn test:electron",
+    "test:bundling": "node test/prepare.mjs bundler && vitest run --testTimeout 60000 ./test/bundler",
+    "test:electron": "node test/prepare.mjs electron && vitest run --testTimeout 60000 ./test/electron",
+    "test:bindings": "node test/prepare.mjs bindings && vitest run --testTimeout 60000 ./test/bindings"
   },
   "dependencies": {
     "detect-libc": "^2.0.3",
@@ -55,12 +58,7 @@
     "eslint": "^7.0.0",
     "node-gyp": "^9.4.1",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4",
-    "webpack": "^5.97.1",
-    "node-loader": "^2.1.0",
-    "esbuild": "^0.24.2",
-    "electron": "^34.1.0",
-    "@electron/rebuild": "^3.7.1"
+    "vitest": "^3.0.5"
   },
   "sideEffects": false,
   "volta": {

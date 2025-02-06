@@ -253,7 +253,7 @@ jobs:
 
         - name: Build TypeScript
           run: yarn build:lib
-  
+
         - name: Extract Prebuilt Binaries
           uses: actions/download-artifact@v4
           with:
@@ -271,8 +271,8 @@ jobs:
             retention-days: 90
             path: ${{ github.workspace }}/*.tgz
 
-  job_test:
-    name: Test (v${{ matrix.node }}) ${{ matrix.os }}
+  job_test_bindings:
+    name: Test Bindings (v${{ matrix.node }}) ${{ matrix.os }}
     needs: [job_build]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -302,11 +302,55 @@ jobs:
         with:
           name: ${{ github.sha }}
       - name: Run tests
-        run: yarn test
+        run: yarn test:bindings
+
+  job_test_electron:
+    name: Test Electron ${{ matrix.os }}
+    needs: [job_build]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - name: Check out current commit
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+      - name: Install dependencies
+        run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
+      - name: Download Tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.sha }}
+      - name: Run tests
+        run: yarn test:electron
+
+  job_test_bundling:
+    name: Test Bundling
+    needs: [job_build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+      - name: Install dependencies
+        run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
+      - name: Download Tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.sha }}
+      - name: Run tests
+        run: yarn test:bundling
 
   job_required_jobs_passed:
     name: All required jobs passed
-    needs: [job_test, job_lint]
+    needs: [job_lint, job_test_bindings, job_test_electron, job_test_bundling]
     # Always run this, even if a dependent job failed
     if: always()
     runs-on: ubuntu-latest
