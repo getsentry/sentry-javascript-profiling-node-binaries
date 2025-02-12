@@ -3,8 +3,8 @@
 
 build/*
 lib/*
-test/package.json
-test/yarn.lock
+test/**/yarn.lock
+test/**/package.json
 
 ### Node ###
 # Logs

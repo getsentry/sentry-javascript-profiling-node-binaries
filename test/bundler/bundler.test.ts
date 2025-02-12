@@ -1,6 +1,8 @@
+// eslint-disable-next-line import/no-unresolved
 import esbuild from 'esbuild';
 import * as path from 'path';
 import { describe, expect, test } from "vitest";
+// eslint-disable-next-line import/no-unresolved
 import webpack from 'webpack';
 
 const entry = path.resolve(__dirname, 'bundle.mjs');
@@ -28,7 +30,7 @@ describe('Bundler tests', () => {
           rules: [
             {
               test: /\.node$/,
-              loader: 'node-loader',
+              loader: require.resolve('node-loader'),
             },
           ],
         },

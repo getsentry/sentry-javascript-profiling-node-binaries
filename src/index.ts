@@ -37,6 +37,15 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
     return require(binaryPath);
   }
 
+  if (process.versions.electron) {
+    try {
+      return require('../build/Release/sentry_cpu_profiler.node');
+    } catch (e) {
+      console.warn(`The '@sentry/profiling-node' binary could not be found. Use '@electron/rebuild' to ensure the native module is built for Electron.`);
+      throw e;
+    }
+  }
+
   // We need the fallthrough so that in the end, we can fallback to the dynamic require.
   // This is for cases where precompiled binaries were not provided, but may have been compiled from source.
   if (platform === 'darwin') {

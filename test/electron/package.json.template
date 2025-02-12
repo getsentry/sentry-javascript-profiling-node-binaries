@@ -1,0 +1,13 @@
+{
+  "name": "node-cpu-profiler-test",
+  "license": "MIT",
+  "main": "main.mjs",
+  "scripts": {
+    "rebuild": "electron-rebuild"
+  },
+  "dependencies": {
+    "electron": "^34.1.0",
+    "@electron/rebuild": "^3.7.1",
+    "@sentry-internal/node-cpu-profiler": "{{path}}"
+  }
+}
