@@ -1,3 +1,8 @@
+## 2.1.0
+
+- feat: Support Electron (#9)
+- fix: Fix and test bundling (#8)
+
 ## 2.0.0
 
 The profiling-node binaries were moved out of the JavaScript monorepo and into their own repository.
