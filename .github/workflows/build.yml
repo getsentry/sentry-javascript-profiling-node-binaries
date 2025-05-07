@@ -169,7 +169,7 @@ jobs:
         if: ${{ !contains(matrix.container, 'alpine') }}
         id: python-setup
         with:
-          python-version: '3.8.18'
+          python-version: '3.13.3'
 
       - name: Setup (arm64| ${{ contains(matrix.container, 'alpine') && 'musl' || 'glibc'  }})
         if: matrix.arch == 'arm64' && !contains(matrix.container, 'alpine') && matrix.target_platform != 'darwin'
