@@ -33,56 +33,56 @@ jobs:
       matrix:
         include:
             # x64 glibc
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             node: 18
             binary: linux-x64-glibc-108
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             node: 20
             binary: linux-x64-glibc-115
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             node: 22
             binary: linux-x64-glibc-127
 
             # x64 musl
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             container: node:18-alpine3.17
             node: 18
             binary: linux-x64-musl-108
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             container: node:20-alpine3.17
             node: 20
             binary: linux-x64-musl-115
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             container: node:22-alpine3.18
             node: 22
             binary: linux-x64-musl-127
 
             # arm64 glibc
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             node: 18
             binary: linux-arm64-glibc-108
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             node: 20
             binary: linux-arm64-glibc-115
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             node: 22
             binary: linux-arm64-glibc-127
 
             # arm64 musl
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             container: node:18-alpine3.17
             node: 18
             binary: linux-arm64-musl-108
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             container: node:20-alpine3.17
             node: 20
             binary: linux-arm64-musl-115
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             container: node:22-alpine3.18
             node: 22
@@ -169,7 +169,7 @@ jobs:
         if: ${{ !contains(matrix.container, 'alpine') }}
         id: python-setup
         with:
-          python-version: '3.8.10'
+          python-version: '3.9.13'
 
       - name: Setup (arm64| ${{ contains(matrix.container, 'alpine') && 'musl' || 'glibc'  }})
         if: matrix.arch == 'arm64' && !contains(matrix.container, 'alpine') && matrix.target_platform != 'darwin'
@@ -281,7 +281,6 @@ jobs:
         os: [
           ubuntu-24.04,
           ubuntu-22.04,
-          ubuntu-20.04,
           ubuntu-22.04-arm,
           macos-latest,      # macOS arm64
           macos-13,          # macOS x64
