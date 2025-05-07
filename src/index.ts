@@ -59,6 +59,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
       if (abi === '127') {
         return require('./sentry_cpu_profiler-darwin-x64-127.node');
       }
+      if (abi === '137') {
+        return require('./sentry_cpu_profiler-darwin-x64-137.node');
+      }
     }
 
     if (arch === 'arm64') {
@@ -70,6 +73,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
       }
       if (abi === '127') {
         return require('./sentry_cpu_profiler-darwin-arm64-127.node');
+      }
+      if (abi === '137') {
+        return require('./sentry_cpu_profiler-darwin-arm64-137.node');
       }
     }
   }
@@ -84,6 +90,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
       }
       if (abi === '127') {
         return require('./sentry_cpu_profiler-win32-x64-127.node');
+      }
+      if (abi === '137') {
+        return require('./sentry_cpu_profiler-win32-x64-137.node');
       }
     }
   }
@@ -100,6 +109,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
         if (abi === '127') {
           return require('./sentry_cpu_profiler-linux-x64-musl-127.node');
         }
+        if (abi === '137') {
+          return require('./sentry_cpu_profiler-linux-x64-musl-137.node');
+        }
       }
       if (stdlib === 'glibc') {
         if (abi === '108') {
@@ -110,6 +122,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
         }
         if (abi === '127') {
           return require('./sentry_cpu_profiler-linux-x64-glibc-127.node');
+        }
+        if (abi === '137') {
+          return require('./sentry_cpu_profiler-linux-x64-glibc-137.node');
         }
       }
     }
@@ -124,6 +139,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
         if (abi === '127') {
           return require('./sentry_cpu_profiler-linux-arm64-musl-127.node');
         }
+        if (abi === '137') {
+          return require('./sentry_cpu_profiler-linux-arm64-musl-137.node');
+        }
       }
 
       if (stdlib === 'glibc') {
@@ -135,6 +153,9 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
         }
         if (abi === '127') {
           return require('./sentry_cpu_profiler-linux-arm64-glibc-127.node');
+        }
+        if (abi === '137') {
+          return require('./sentry_cpu_profiler-linux-arm64-glibc-137.node');
         }
       }
     }

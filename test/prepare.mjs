@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const env = {...process.env, NODE_OPTIONS: "--no-deprecation"};
 
 function prepareTest(root) {
   const pkgJson = require('../package.json');
@@ -27,10 +28,10 @@ function prepareTest(root) {
   rmSync(join(root, 'yarn.lock'), { force: true });
 
   console.log('Clearing yarn cache...');
-  spawnSync(`yarn cache clean ${pkgJson.name}`, { shell: true, stdio: 'inherit' });
+  spawnSync(`yarn cache clean ${pkgJson.name}`, { shell: true, stdio: 'inherit', env });
   // Yarn has a bug where 'yarn cache clean X' does not remove the temp directory where the tgz is unpacked to.
   // This means installing from local tgz does not update when src changes are made https://github.com/yarnpkg/yarn/issues/5357
-  const dirResult = spawnSync('yarn cache dir', { shell: true });
+  const dirResult = spawnSync('yarn cache dir', { shell: true, env });
   const tmpDir = join(dirResult.output.toString().replace(/[,\n\r]/g, ''), '.tmp');
   rmSync(tmpDir, { recursive: true, force: true });
 

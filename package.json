@@ -56,12 +56,13 @@
     "clang-format": "^1.8.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.0.0",
-    "node-gyp": "^9.4.1",
+    "node-gyp": "^11.2.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
   },
   "sideEffects": false,
   "volta": {
-    "node": "22.13.1"
+    "node": "24.0.0",
+    "yarn": "1.22.22"
   }
 }
