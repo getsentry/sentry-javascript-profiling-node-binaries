@@ -1,3 +1,8 @@
+## 2.2.0
+
+- feat: Support Node 24 (#12)
+- ci: Bump Ubuntu build version (#13)
+
 ## 2.1.0
 
 - feat: Support Electron (#9)
