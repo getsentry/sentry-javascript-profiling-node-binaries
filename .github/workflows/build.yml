@@ -42,7 +42,7 @@ jobs:
           - os: ubuntu-22.04
             node: 22
             binary: linux-x64-glibc-127
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             node: 24
             binary: linux-x64-glibc-137
 
@@ -59,7 +59,7 @@ jobs:
             container: node:22-alpine3.18
             node: 22
             binary: linux-x64-musl-127
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             container: node:24-alpine3.20
             node: 24
             binary: linux-x64-musl-137
@@ -77,7 +77,7 @@ jobs:
             arch: arm64
             node: 22
             binary: linux-arm64-glibc-127
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             node: 24
             binary: linux-arm64-glibc-137
@@ -98,7 +98,7 @@ jobs:
             container: node:22-alpine3.18
             node: 22
             binary: linux-arm64-musl-127
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: arm64
             container: node:24-alpine3.20
             node: 24
