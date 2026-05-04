@@ -1,3 +1,12 @@
+## 2.3.0
+
+- fix: Memory leaks, integer truncation, UB, and double-stop (#26)
+- fix: Integer arithmetic for timestamps, emit elapsed_since_start_ns as string (#28)
+- fix: Dead member, capacity checks, insert perf, napi_env by value (#27)
+- chore: Replace execSync with execFileSync to prevent command injection (#23)
+- chore: Pin GitHub Actions to full-length commit SHAs (#24)
+- ci: Build Linux in container for wider glibc support (#16)
+
 ## 2.2.0
 
 - feat: Support Node 24 (#12)
