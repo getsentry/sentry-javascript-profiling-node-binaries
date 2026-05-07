@@ -1,3 +1,7 @@
+## 2.4.0
+
+- feat: Add Node 26 support (#32)
+
 ## 2.3.0
 
 - fix: Memory leaks, integer truncation, UB, and double-stop (#26)
