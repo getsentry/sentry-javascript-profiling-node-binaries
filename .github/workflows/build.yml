@@ -243,6 +243,9 @@ jobs:
       - name: Setup compiler (Node 26 glibc x64)
         if: matrix.binary == 'linux-x64-glibc-147'
         run: |
+          # The base container ships a stale Yarn apt source with an expired/missing key.
+          # Remove it so apt-get update can succeed for toolchain installation.
+          rm -f /etc/apt/sources.list.d/yarn.list
           apt-get update
           apt-get install -y software-properties-common
           add-apt-repository -y ppa:ubuntu-toolchain-r/test
