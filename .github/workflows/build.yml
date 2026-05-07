@@ -238,6 +238,19 @@ jobs:
         with:
           python-version: "3.9.13"
 
+      # Node 26 V8 headers include <source_location>, which requires a newer C++ toolchain.
+      # Our ubuntu-20.04 glibc container defaults to an older compiler, so upgrade only this target.
+      - name: Setup compiler (Node 26 glibc x64)
+        if: matrix.binary == 'linux-x64-glibc-147'
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common
+          add-apt-repository -y ppa:ubuntu-toolchain-r/test
+          apt-get update
+          apt-get install -y gcc-12 g++-12
+          echo "CC=gcc-12" >> "$GITHUB_ENV"
+          echo "CXX=g++-12" >> "$GITHUB_ENV"
+
       - name: Setup (arm64| ${{ contains(matrix.container, 'alpine') && 'musl' || 'glibc'  }})
         if: matrix.arch == 'arm64' && !contains(matrix.container, 'alpine') && matrix.target_platform != 'darwin'
         run: |
