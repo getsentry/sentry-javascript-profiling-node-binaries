@@ -17,8 +17,8 @@ jobs:
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version-file: "package.json"
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
       - name: Install dependencies
         run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
       - name: Lint
@@ -217,8 +217,8 @@ jobs:
         if: contains(matrix.container, 'alpine') == false
         with:
           node-version: ${{ matrix.node }}
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
 
       - name: Increase yarn network timeout on Windows
         if: contains(matrix.os, 'windows')
@@ -314,8 +314,8 @@ jobs:
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version-file: "package.json"
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
 
       - name: Install dependencies
         run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
@@ -363,8 +363,8 @@ jobs:
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version: ${{ matrix.node }}
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
       - name: Install dependencies
         run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
       - name: Download Tarball
@@ -389,8 +389,8 @@ jobs:
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version-file: "package.json"
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
       - name: Install dependencies
         run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
       - name: Download Tarball
@@ -411,8 +411,8 @@ jobs:
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version-file: "package.json"
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
+      - name: Install Yarn (if not yet installed)
+        run: yarn --version || npm install -g yarn@1.22.22
       - name: Install dependencies
         run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
       - name: Download Tarball
