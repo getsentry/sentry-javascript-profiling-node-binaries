@@ -1,3 +1,13 @@
+## 2.4.1
+
+### Bug Fixes 🐛
+
+- Deadlock in Electron >= v40 by @timfish in [#35](https://github.com/getsentry/sentry-javascript-profiling-node-binaries/pull/35)
+
+### Internal Changes 🔧
+
+- Update craft for auto changelog by @timfish in [#36](https://github.com/getsentry/sentry-javascript-profiling-node-binaries/pull/36)
+
 ## 2.4.0
 
 - feat: Add Node 26 support (#32)
