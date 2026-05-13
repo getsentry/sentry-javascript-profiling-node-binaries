@@ -83,6 +83,7 @@ private:
       cpu_listeners;
   v8::Isolate *isolate;
   v8::HeapStatistics heap_stats;
+  uv_cpu_info_t cpu_stats;
 
 public:
   MeasurementsTicker(uv_loop_t *loop)
@@ -161,7 +162,7 @@ void MeasurementsTicker::remove_heap_listener(
 
 // CPU tickers
 void MeasurementsTicker::cpu_callback() {
-  uv_cpu_info_t *cpu = nullptr;
+  uv_cpu_info_t *cpu = &cpu_stats;
   int count;
   int err = uv_cpu_info(&cpu, &count);
 
