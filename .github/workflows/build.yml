@@ -367,7 +367,7 @@ jobs:
             ubuntu-24.04,
             ubuntu-22.04,
             ubuntu-22.04-arm,
-            macos-latest, # macOS arm64
+            macos-15, # macOS arm64
             macos-15-intel, # macOS x64
             windows-latest,
           ]
@@ -397,7 +397,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-2022]
+        os: [macos-15, windows-2022]
     steps:
       - name: Check out current commit
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
