@@ -1,3 +1,9 @@
+## 2.4.2
+
+### Internal Changes 🔧
+
+- Rename node cpu profiler package by @logaretm in [#38](https://github.com/getsentry/sentry-javascript-profiling-node-binaries/pull/38)
+
 ## 2.4.1
 
 ### Bug Fixes 🐛
