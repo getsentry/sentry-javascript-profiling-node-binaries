@@ -1,4 +1,4 @@
-import { CpuProfilerBindings, ProfileFormat } from '@sentry-internal/node-cpu-profiler';
+import { CpuProfilerBindings, ProfileFormat } from '@sentry/node-cpu-profiler';
 
 CpuProfilerBindings.startProfiling('test');
 

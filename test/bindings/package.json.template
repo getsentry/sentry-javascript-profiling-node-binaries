@@ -2,6 +2,6 @@
   "name": "node-cpu-profiler-test",
   "license": "MIT",
   "dependencies": {
-    "@sentry-internal/node-cpu-profiler": "{{path}}"
+    "@sentry/node-cpu-profiler": "{{path}}"
   }
 }

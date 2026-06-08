@@ -8,6 +8,6 @@
   "dependencies": {
     "electron": "^34.1.0",
     "@electron/rebuild": "^3.7.1",
-    "@sentry-internal/node-cpu-profiler": "{{path}}"
+    "@sentry/node-cpu-profiler": "{{path}}"
   }
 }

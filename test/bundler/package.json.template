@@ -5,6 +5,6 @@
     "webpack": "^5.97.1",
     "node-loader": "^2.1.0",
     "esbuild": "^0.24.2",
-    "@sentry-internal/node-cpu-profiler": "{{path}}"
+    "@sentry/node-cpu-profiler": "{{path}}"
   }
 }
