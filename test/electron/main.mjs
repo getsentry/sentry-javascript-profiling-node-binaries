@@ -7,7 +7,7 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-const { CpuProfilerBindings, ProfileFormat } = await import('@sentry-internal/node-cpu-profiler');
+const { CpuProfilerBindings, ProfileFormat } = await import('@sentry/node-cpu-profiler');
 
 CpuProfilerBindings.startProfiling('test');
 
