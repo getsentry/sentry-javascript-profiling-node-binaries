@@ -1,3 +1,9 @@
+## 2.4.3
+
+### Internal Changes 🔧
+
+- Log warning when fallback binary import fails by @Lms24 in [#39](https://github.com/getsentry/sentry-javascript-profiling-node-binaries/pull/39)
+
 ## 2.4.2
 
 ### Internal Changes 🔧
