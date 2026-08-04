@@ -24,7 +24,7 @@ const identifier = [platform, arch, stdlib, abi].filter(c => c !== undefined && 
  *  Imports cpp bindings based on the current platform and architecture.
  */
 // eslint-disable-next-line complexity
-export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
+export function importCppBindingsModule(): PrivateV8CpuProfilerBindings | undefined {
   // If a binary path is specified, use that.
   if (env['SENTRY_PROFILER_BINARY_PATH']) {
     const envPath = env['SENTRY_PROFILER_BINARY_PATH'];
@@ -182,10 +182,16 @@ export function importCppBindingsModule(): PrivateV8CpuProfilerBindings {
     }
   }
 
-  return require(`./sentry_cpu_profiler-${identifier}.node`);
+  try {
+    return require(`./sentry_cpu_profiler-${identifier}.node`);
+  } catch (e) {
+    console.log(`[Profiling] Could not import binary: ${identifier}. Profiling does not work on non-LTS Node.js versions. Detailed Error:`);
+    console.log(e);
+    return undefined;
+  }
 }
 
-export const PrivateCpuProfilerBindings: PrivateV8CpuProfilerBindings = importCppBindingsModule();
+export const PrivateCpuProfilerBindings: PrivateV8CpuProfilerBindings | undefined = importCppBindingsModule();
 
 class Bindings implements V8CpuProfilerBindings {
   public startProfiling(name: string): void {
