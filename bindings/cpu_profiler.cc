@@ -247,9 +247,30 @@ public:
   v8::CpuProfiler *cpu_profiler;
 
   explicit Profiler(napi_env env, v8::Isolate *isolate)
-      : measurements_ticker(uv_default_loop()),
-        cpu_profiler(
-            v8::CpuProfiler::New(isolate, kNamingMode, GetLoggingMode())) {}
+      : measurements_ticker(uv_default_loop()), cpu_profiler(nullptr),
+        isolate(isolate) {}
+
+  // The profiler is created on the first profile start rather than when the
+  // addon is loaded. In eager logging mode v8::CpuProfiler::New walks every
+  // compiled function while holding V8's Logger mutex, and on Node <= 22 that
+  // mutex is not recursive: if the walk's own allocation happens to start
+  // incremental marking, V8 re-enters the mutex from
+  // MarkCompactCollector::StartCompaction and the thread deadlocks against
+  // itself (V8 bug 41497149, fixed in V8 12.7). Doing this lazily keeps that
+  // risk out of process startup entirely, and processes that never profile
+  // never pay for the walk at all.
+  v8::CpuProfiler *GetOrCreateCpuProfiler() {
+    if (cpu_profiler == nullptr) {
+      cpu_profiler =
+          v8::CpuProfiler::New(isolate, kNamingMode, GetLoggingMode());
+      cpu_profiler->SetSamplingInterval(kSamplingInterval);
+    }
+
+    return cpu_profiler;
+  }
+
+private:
+  v8::Isolate *isolate;
 };
 
 class SentryProfile {
@@ -327,7 +348,7 @@ void SentryProfile::Start(Profiler *profiler) {
   timestamp = timestamp_milliseconds();
 
   // Initialize the CPU Profiler
-  profiler->cpu_profiler->StartProfiling(
+  profiler->GetOrCreateCpuProfiler()->StartProfiling(
       profile_title, v8::CpuProfilingMode::kCallerLineNumbers, true,
       v8::CpuProfilingOptions::kNoSampleLimit);
 
@@ -1164,7 +1185,6 @@ napi_value Init(napi_env env, napi_value exports) {
   }
 
   Profiler *profiler = new Profiler(env, isolate);
-  profiler->cpu_profiler->SetSamplingInterval(kSamplingInterval);
 
   if (napi_set_instance_data(env, profiler, FreeAddonData, NULL) != napi_ok) {
     napi_throw_error(env, nullptr, "Failed to set instance data for profiler.");
