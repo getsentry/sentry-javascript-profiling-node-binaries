@@ -503,6 +503,19 @@ CreateFrameNode(napi_env env, const v8::CpuProfileNode &node,
                           &function);
   napi_set_named_property(env, js_node, "function", function);
 
+  // Only populated for functions that were optimized and then deoptimized
+  // while the profile was being collected.
+  const std::vector<v8::CpuProfileDeoptInfo> &deopt_infos =
+      node.GetDeoptInfos();
+
+  if (!deopt_infos.empty()) {
+    // deopt_reason is a static string owned by V8, it must not be freed.
+    napi_value deopt_reason_prop;
+    napi_create_string_utf8(env, deopt_infos.back().deopt_reason,
+                            NAPI_AUTO_LENGTH, &deopt_reason_prop);
+    napi_set_named_property(env, js_node, "deopt_reason", deopt_reason_prop);
+  }
+
   const char *resource = node.GetScriptResourceNameStr();
 
   if (resource != nullptr) {

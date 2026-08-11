@@ -15,6 +15,9 @@ export type Frame = {
   file: string;
   lineno: number;
   colno: number;
+  // Set when the function was optimized and then deoptimized during the
+  // profiling window (most recent deopt).
+  deopt_reason?: string;
 };
 
 export interface Measurement {

@@ -1,0 +1,18 @@
+{
+  "name": "profiling-deopt-demos",
+  "private": true,
+  "description": "Demo apps proving V8 deopt-reason capture in the Sentry Node profiler catches regression-shaped performance problems",
+  "scripts": {
+    "scenario-1": "node shared/run-scenario.js scenario-1-events",
+    "scenario-2": "node shared/run-scenario.js scenario-2-stats",
+    "scenario-3": "node shared/run-scenario.js scenario-3-series",
+    "scenario-4": "node shared/run-scenario.js scenario-4-webhook",
+    "scenario-5": "node shared/run-scenario.js scenario-5-metrics"
+  },
+  "dependencies": {
+    "@sentry/node": "^10.5.0",
+    "@sentry/profiling-node": "^10.5.0",
+    "autocannon": "^8.0.0",
+    "express": "^5.1.0"
+  }
+}
