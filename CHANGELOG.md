@@ -1,3 +1,9 @@
+## Unreleased
+
+### Bug Fixes 🐛
+
+- Collect script resources when only the `_debugIds` global is set (native bundler debug ID support), so the SDK can build `debug_meta` for profile chunks. Fixes [getsentry/sentry-javascript#24202](https://github.com/getsentry/sentry-javascript/issues/24202)
+
 ## 2.4.3
 
 ### Internal Changes 🔧
