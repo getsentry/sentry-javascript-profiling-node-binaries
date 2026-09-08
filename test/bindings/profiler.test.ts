@@ -338,6 +338,30 @@ describe('Bindings', () => {
       expect(hasDeoptimizedFrame).toBe(true);
     });
 
+    test('collects resources when only _debugIds is set', async () => {
+      global._debugIds = {};
+
+      try {
+        CpuProfilerBindings.startProfiling('profiled-program');
+        await wait(100);
+        const profile = CpuProfilerBindings.stopProfiling('profiled-program', ProfileFormat.CHUNK);
+
+        if (!profile) fail('Profile is null');
+        expect(profile.resources.length).toBeGreaterThan(0);
+      } finally {
+        delete global._debugIds;
+      }
+    });
+
+    test('does not collect resources when no debug ID globals are set', async () => {
+      CpuProfilerBindings.startProfiling('profiled-program');
+      await wait(100);
+      const profile = CpuProfilerBindings.stopProfiling('profiled-program', ProfileFormat.CHUNK);
+
+      if (!profile) fail('Profile is null');
+      expect(profile.resources.length).toBe(0);
+    });
+
     test('does not crash if the native startProfiling function is not available', async () => {
       const original = PrivateCpuProfilerBindings.startProfiling;
       PrivateCpuProfilerBindings.startProfiling = undefined;

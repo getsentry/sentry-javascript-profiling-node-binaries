@@ -228,7 +228,8 @@ class Bindings implements V8CpuProfilerBindings {
       name,
       format as unknown as number,
       threadId,
-      !!global._sentryDebugIds,
+      // Bundlers with native debug ID support (e.g. Turbopack) only write `_debugIds`; the SDK resolves both globals.
+      !!(global._sentryDebugIds || global._debugIds),
     );
   }
 }
