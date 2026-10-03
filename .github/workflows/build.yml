@@ -339,14 +339,6 @@ jobs:
       - name: Build profiling-node & its dependencies
         run: yarn build:lib
 
-      - name: TEMP prove glibc baseline
-        if: contains(matrix.binary, 'linux') && !contains(matrix.container, 'alpine') && contains(matrix.binary, 'glibc')
-        run: |
-          OBJDUMP=${{ matrix.arch == 'arm64' && 'aarch64-linux-gnu-objdump' || 'objdump' }}
-          BIN=lib/sentry_cpu_profiler-${{ matrix.binary }}.node
-          echo "${{ matrix.binary }} built in: $(. /etc/os-release; echo $PRETTY_NAME), $(ldd --version | head -1)"
-          echo "MAX_GLIBC_REQUIRED[${{ matrix.binary }}]=$("$OBJDUMP" -T "$BIN" | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1)"
-
       - name: Archive Binary
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
