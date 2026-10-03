@@ -35,93 +35,101 @@ jobs:
       matrix:
         include:
           # x64 glibc
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: ghcr.io/getsentry/sentry-test-ubuntu-20.04-amd64:0dd255f3d41d013c1db4c4e08ffd22ee7959c3cc
             node: 18
             binary: linux-x64-glibc-108
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: ghcr.io/getsentry/sentry-test-ubuntu-20.04-amd64:0dd255f3d41d013c1db4c4e08ffd22ee7959c3cc
             node: 20
             binary: linux-x64-glibc-115
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: ghcr.io/getsentry/sentry-test-ubuntu-20.04-amd64:0dd255f3d41d013c1db4c4e08ffd22ee7959c3cc
             node: 22
             binary: linux-x64-glibc-127
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: ghcr.io/getsentry/sentry-test-ubuntu-20.04-amd64:0dd255f3d41d013c1db4c4e08ffd22ee7959c3cc
             node: 24
             binary: linux-x64-glibc-137
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: ghcr.io/getsentry/sentry-test-ubuntu-20.04-amd64:0dd255f3d41d013c1db4c4e08ffd22ee7959c3cc
             node: 26
             binary: linux-x64-glibc-147
 
             # x64 musl
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: node:18-alpine3.17
             node: 18
             binary: linux-x64-musl-108
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: node:20-alpine3.17
             node: 20
             binary: linux-x64-musl-115
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: node:22-alpine3.18
             node: 22
             binary: linux-x64-musl-127
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: node:24-alpine3.20
             node: 24
             binary: linux-x64-musl-137
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             container: node:26-alpine3.22
             node: 26
             binary: linux-x64-musl-147
 
             # arm64 glibc
-          - os: ubuntu-22.04
+            # Cross-compiled with the apt gcc-aarch64-linux-gnu toolchain, whose sysroot sets the
+            # glibc these binaries need (2.35 on Ubuntu 22.04, 2.39 on 24.04). Build in an
+            # Ubuntu 22.04 container so the baseline doesn't depend on the runner image.
+          - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 18
             binary: linux-arm64-glibc-108
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 20
             binary: linux-arm64-glibc-115
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 22
             binary: linux-arm64-glibc-127
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 24
             binary: linux-arm64-glibc-137
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 26
             binary: linux-arm64-glibc-147
 
             # arm64 musl
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: arm64
             container: node:18-alpine3.17
             node: 18
             binary: linux-arm64-musl-108
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: arm64
             container: node:20-alpine3.17
             node: 20
             binary: linux-arm64-musl-115
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: arm64
             container: node:22-alpine3.18
             node: 22
             binary: linux-arm64-musl-127
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: arm64
             container: node:24-alpine3.20
             node: 24
             binary: linux-arm64-musl-137
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: arm64
             container: node:26-alpine3.22
             node: 26
@@ -205,6 +213,12 @@ jobs:
           apk add --no-cache build-base git g++ make curl python3
           ln -sf python3 /usr/bin/python
 
+      - name: Install base packages (ubuntu:22.04 container)
+        if: matrix.container == 'ubuntu:22.04'
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl git build-essential
+
       - name: Check out current commit
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
@@ -257,8 +271,8 @@ jobs:
       - name: Setup (arm64| ${{ contains(matrix.container, 'alpine') && 'musl' || 'glibc'  }})
         if: matrix.arch == 'arm64' && !contains(matrix.container, 'alpine') && matrix.target_platform != 'darwin'
         run: |
-          sudo apt-get update
-          sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          apt-get update
+          apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
       - name: Setup Musl
         if: contains(matrix.container, 'alpine')
@@ -325,6 +339,14 @@ jobs:
       - name: Build profiling-node & its dependencies
         run: yarn build:lib
 
+      - name: TEMP prove glibc baseline
+        if: contains(matrix.binary, 'linux') && !contains(matrix.container, 'alpine') && contains(matrix.binary, 'glibc')
+        run: |
+          OBJDUMP=${{ matrix.arch == 'arm64' && 'aarch64-linux-gnu-objdump' || 'objdump' }}
+          BIN=lib/sentry_cpu_profiler-${{ matrix.binary }}.node
+          echo "${{ matrix.binary }} built in: $(. /etc/os-release; echo $PRETTY_NAME), $(ldd --version | head -1)"
+          echo "MAX_GLIBC_REQUIRED[${{ matrix.binary }}]=$("$OBJDUMP" -T "$BIN" | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1)"
+
       - name: Archive Binary
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -370,22 +392,35 @@ jobs:
           path: ${{ github.workspace }}/*.tgz
 
   job_test_bindings:
-    name: Test Bindings (v${{ matrix.node }}) ${{ matrix.os }}
+    name: Test Bindings (v${{ matrix.node }}) ${{ matrix.os }}${{ matrix.legacy && ' (ubuntu:22.04 container)' || '' }}
     needs: [job_build]
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.legacy && 'ubuntu:22.04' || null }}
     strategy:
       fail-fast: false
       matrix:
         os: [
             ubuntu-24.04,
-            ubuntu-22.04,
-            ubuntu-22.04-arm,
+            ubuntu-24.04-arm,
             macos-latest, # macOS arm64
             macos-15-intel, # macOS x64
             windows-latest,
           ]
         node: [18, 20, 22, 24, 26]
+        # The Linux prebuilt binaries must keep loading on the oldest Ubuntu we support, which
+        # the retired ubuntu-22.04 runners used to cover. Also run them in an Ubuntu 22.04
+        # container; a binary built against a newer glibc fails here with "GLIBC_x not found".
+        legacy: [false, true]
+        exclude:
+          - { os: macos-latest, legacy: true }
+          - { os: macos-15-intel, legacy: true }
+          - { os: windows-latest, legacy: true }
     steps:
+      - name: Install base packages (ubuntu:22.04 container)
+        if: matrix.legacy
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl git
       - name: Check out current commit
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Set up Node
