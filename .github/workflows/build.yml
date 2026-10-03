@@ -83,22 +83,27 @@ jobs:
             # glibc these binaries need (2.35 on Ubuntu 22.04, 2.39 on 24.04). Build in an
             # Ubuntu 22.04 container so the baseline doesn't depend on the runner image.
           - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 18
             binary: linux-arm64-glibc-108
           - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 20
             binary: linux-arm64-glibc-115
           - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 22
             binary: linux-arm64-glibc-127
           - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 24
             binary: linux-arm64-glibc-137
           - os: ubuntu-24.04
+            container: ubuntu:22.04
             arch: arm64
             node: 26
             binary: linux-arm64-glibc-147
@@ -266,9 +271,8 @@ jobs:
       - name: Setup (arm64| ${{ contains(matrix.container, 'alpine') && 'musl' || 'glibc'  }})
         if: matrix.arch == 'arm64' && !contains(matrix.container, 'alpine') && matrix.target_platform != 'darwin'
         run: |
-          SUDO=""; [ "$(id -u)" -ne 0 ] && SUDO=sudo
-          $SUDO apt-get update
-          $SUDO apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          apt-get update
+          apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
       - name: Setup Musl
         if: contains(matrix.container, 'alpine')
