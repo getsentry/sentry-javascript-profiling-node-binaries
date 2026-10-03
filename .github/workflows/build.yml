@@ -420,7 +420,8 @@ jobs:
         if: matrix.legacy
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends ca-certificates curl git
+          # libatomic1: the Node 26 binary from setup-node needs it; the bare image lacks it.
+          apt-get install -y --no-install-recommends ca-certificates curl git libatomic1
       - name: Check out current commit
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Set up Node
